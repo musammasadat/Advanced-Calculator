@@ -1,42 +1,41 @@
-
 import math
 import time 
 
-class Hesapmakinesi:
+class Calculator:
     def __init__(self):
-        print("Hesap Makinesi Başlatıldı.")
+        print("Calculator Started.")
 
-    def hesapla(self, ifade):
+    def calculate(self, expression):
         try:
-            izinli_fonksiyonlar = {k: getattr(math, k) for k in dir(math) if not k.startswith("_")}
-            izinli_fonksiyonlar.update({"abs": abs, "round": round})
+            allowed_functions = {k: getattr(math, k) for k in dir(math) if not k.startswith("_")}
+            allowed_functions.update({"abs": abs, "round": round})
 
-            sonuc = eval(ifade, {"__builtins__": None}, izinli_fonksiyonlar)
-            return sonuc
+            result = eval(expression, {"__builtins__": None}, allowed_functions)
+            return result
         except Exception as e:
-            return f"Hata: {str(e)}"
+            return f"Error: {str(e)}"
 
-    def calistir(self):
-        print("Hesap Makinesi'ne Hoş Geldiniz!")
-        print("İstediğiniz matematiksel ifadeyi yazabilirsiniz.")
-        print("Örnekler:")
-        print(" - Toplama: 3 + 5")
-        print(" - Kök alma: sqrt(16)")
-        print(" - Logaritma: log(8, 2)")
-        print(" - Sinüs: sin(pi/2)")
-        print(" - Çıkmak için 'q' yazın.")
+    def run(self):
+        print("Welcome to the Calculator!")
+        print("You can enter any mathematical expression.")
+        print("Examples:")
+        print(" - Addition: 3 + 5")
+        print(" - Square root: sqrt(16)")
+        print(" - Logarithm: log(8, 2)")
+        print(" - Sine: sin(pi/2)")
+        print(" - Type 'q' to exit.")
         
         while True:
-            ifade = input("\nİfadenizi girin: ")
-            print("Bir saniye bekletiyoruz..")
+            expression = input("\nEnter your expression: ")
+            print("Please wait for a moment...")
             time.sleep(1)
 
-            if ifade.lower() == 'q':
-                print("Hesap makinesi kapatılıyor.")
+            if expression.lower() == 'q':
+                print("Calculator is shutting down.")
                 break
-            sonuc = self.hesapla(ifade)
-            print("Sonuç:", sonuc)
+            result = self.calculate(expression)
+            print("Result:", result)
 
 
-hesap_makinesi = Hesapmakinesi()
-hesap_makinesi.calistir()
+calculator = Calculator()
+calculator.run()
